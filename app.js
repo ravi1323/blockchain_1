@@ -14,23 +14,20 @@ app.use(cors());
 app.use(FileUpload());
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
 
-
+// app.use('/users', require('./routes/UserRoute'));
+app.use('/api/test', require('./routes/test'))
+app.use('/api/account', require('./routes/AccountRoute'))
+app.use('/api/nft', require('./routes/NFTRoutes'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'public'));
-
-
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => {
-  return res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get('*', (req, res) => {
+  return res.sendFile(path.join(__dirname, 'public', 'index.html'+req.path));
 })
-// app.use('/users', require('./routes/UserRoute'));
-app.use('/test', require('./routes/test'))
-app.use('/account', require('./routes/AccountRoute'))
-app.use('/nft', require('./routes/NFTRoutes'));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
