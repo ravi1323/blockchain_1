@@ -25,7 +25,7 @@ app.set('views', path.join(__dirname, 'public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('*', (req, res) => {
-  return res.sendFile(path.join(__dirname, 'public', 'index.html'+req.path));
+  return res.sendFile(path.join(__dirname, 'public', 'index.html'));
 })
 
 
