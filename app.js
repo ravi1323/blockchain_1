@@ -21,8 +21,8 @@ app.use('/api/account', require('./routes/AccountRoute'))
 app.use('/api/nft', require('./routes/NFTRoutes'));
 
 // view engine setup
-app.set('views', path.join(__dirname, 'public'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'public'));
 
 app.get('*', (req, res) => {
   return res.sendFile(path.join(__dirname, 'public', 'index.html'));
