@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const { nftMiddleware } = require('../middlewares/nftMiddleware');
 const { createNftItem, getNfts, getOwnedNft, likeNft, disLikeNft, getLikedNftByAccount, getSingleNft } = require('../controllers/NftController');
-const Account = require('../models/Account');
 
 router.post('/', nftMiddleware, createNftItem);
 
