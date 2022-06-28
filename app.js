@@ -5,6 +5,7 @@ const cors = require('cors')
 var logger = require('morgan');
 var createError = require('http-errors');
 var path = require('path');
+const fs  = require('fs')
 const FileUpload = require('express-fileupload')
 
 const app = express()
@@ -20,11 +21,19 @@ app.use('/api/test', require('./routes/test'))
 app.use('/api/account', require('./routes/AccountRoute'))
 app.use('/api/nft', require('./routes/NFTRoutes'));
 
-// view engine setup
-app.use(express.static(path.join(__dirname, 'public')));
-app.set('views', path.join(__dirname, 'public'));
+app.get('/nfts/:filename', (req, res) => {
+  return res.status(200).sendFile(path.join(__dirname, 'public', 'nfts', req.params.filename))
+})
 
-app.get('*', (req, res) => {
+app.get('/profiles/:filename', (req, res) => {
+  return res.status(200).sendFile(path.join(__dirname, 'public', 'profiles', req.params.filename))
+})
+
+// view engine setup
+app.set('views', path.join(__dirname, 'public'));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => {
   return res.sendFile(path.join(__dirname, 'public', 'index.html'));
 })
 
