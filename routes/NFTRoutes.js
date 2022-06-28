@@ -5,6 +5,7 @@ const { createNftItem, getNfts, getOwnedNft, likeNft, disLikeNft, getLikedNftByA
 router.post('/', nftMiddleware, createNftItem);
 
 router.get('/', getNfts);
+
 router.get('/single/:nft_id', getSingleNft);
 
 router.get('/:account', getOwnedNft);
@@ -13,6 +14,6 @@ router.get('/like/:account_hash/:nft_id', likeNft);
 
 router.get('/dislike/:account_hash/:nft_id', disLikeNft);
 
-router.get('/like/:account_hash', getLikedNftByAccount)
+router.get('/like/:account_hash', getLikedNftByAccount);
 
 module.exports = router;

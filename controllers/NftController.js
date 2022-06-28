@@ -217,7 +217,6 @@ const likeNft = async (req, res, next) => {
   }
 
   try {
-  
     if(account.hash && account.nft_id) {
       const user = await Account.findOne({
         hash: account.hash
