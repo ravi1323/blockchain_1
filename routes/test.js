@@ -17,11 +17,18 @@ router.get('/:id', async (req, res, next) => {
 
   const nft = await NFT.findOne({ tokenId: id});
 
-  return res.json({
+  if(nft) {
+    return res.json({
       name: "WebPlanex",
       title: "WP nfts",
       image: nft.content_url
-  })
+    })
+  } else {
+    return res.json({
+      success: false,
+      message: "No NFT is minted within provided NFT Token."
+    })
+  }
 })
 
 module.exports = router;
