@@ -46,6 +46,9 @@ const NFTSchema = mongoose.Schema({
     type: Boolean,
     required: true
   },
+  transaction_hash: {
+    type: String
+  },
   tokenId: {
     type: Number
   }

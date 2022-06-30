@@ -23,6 +23,52 @@ const getNfts = async (req, res, next) => {
   }
 }
 
+const minted = (req, res, next) => {
+  const errors = {
+    nftId: [],
+    tokenId: [],
+    transaction_hash: [],
+    general: []
+  }
+  if(!req.body.nftId || req.body.nftId === "") {
+    errors.nftId.push("nftId is required.");
+  }
+
+  if(!req.body.tokenId || req.body.tokenId === "") {
+    errors.tokenId.push("TokenId field is required.");
+  }
+
+  if(!req.body.transaction_hash || req.body.transaction_hash === "") {
+    errors.transaction_hash.push("transaction_hash is required.");
+  }
+
+  if(errors.tokenId.length > 0 || errors.transaction_hash.length > 0) {
+    return res.status(403).json({
+      success: false,
+      errors: errors
+    })
+  } else {
+    NFT.findByIdAndUpdate(req.body.nftId, {
+      minted: true,
+      tokenId: req.body.tokenId,
+      transaction_hash: req.body.transaction_hash
+    }, function(err, docs) {
+      if(err) {
+        errors.general.push(err.message);
+        return res.status(403).json({
+          success: false,
+          errors: errors
+        })
+      } else {
+        return res.status(201).json({
+          success: true,
+          body: docs
+        })
+      }
+    })
+  }
+}
+
 const getLikedNftByAccount = async (req, res, next) => {
   const account = {
     hash: req.params['account_hash']
@@ -217,6 +263,7 @@ const likeNft = async (req, res, next) => {
   }
 
   try {
+  
     if(account.hash && account.nft_id) {
       const user = await Account.findOne({
         hash: account.hash
@@ -352,5 +399,6 @@ module.exports = {
   likeNft,
   disLikeNft,
   getLikedNftByAccount,
-  getSingleNft
+  getSingleNft,
+  minted
 }
